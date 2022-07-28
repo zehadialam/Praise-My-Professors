@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- stylesheet -->
+    <link href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.1/dist/flowbite.min.css" />
+    <link rel="stylesheet" href="../static/style.css">
+    <!-- script -->
+    <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/script-name.js"></script>
+    <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
+    <title>Home</title>
+</head>
+
+<body>
+    <div>
+        <p class="text-7xl dark:text-white">Salvatore LaMarca</p>
+    </div>
+    <div>
+        <div class="overall-rating">{{average_rating}}</div>
+        <div class="denominator">/&nbsp;5</div>
+    </div>
+    </div>
+    <div class="flex items-center mt-4">
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 awesome">Awesome</span>
+        <div class="mx-4 w-2/4 h-5 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-blue-400 rounded" style="width: {{five_stars_percentage}}%"></div>
+        </div>
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 percent">{{five_stars}}</span>
+    </div>
+    <div class="flex items-center mt-4">
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 great">Great</span>
+        <div class="mx-4 w-2/4 h-5 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-blue-400 rounded" style="width: {{four_stars_percentage}}%"></div>
+        </div>
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 percent">{{four_stars}}</span>
+    </div>
+    <div class="flex items-center mt-4">
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 good">Good</span>
+        <div class="mx-4 w-2/4 h-5 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-blue-400 rounded" style="width: 0%"></div>
+        </div>
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 percent">0</span>
+    </div>
+    <div class="flex items-center mt-4">
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 okay">Okay</span>
+        <div class="mx-4 w-2/4 h-5 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-blue-400 rounded" style="width: 0%"></div>
+        </div>
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 percent">0</span>
+    </div>
+    <div class="flex items-center mt-4">
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 awful">Awful</span>
+        <div class="mx-4 w-2/4 h-5 bg-gray-200 rounded dark:bg-gray-700">
+            <div class="h-5 bg-blue-400 rounded" style="width: 0%"></div>
+        </div>
+        <span class="text-sm font-medium text-blue-600 dark:text-blue-500 percent">0</span>
+    </div>
+    {% for review in reviews %}
+    {% if review["rOverall"] >= 4.0 %}
+    <div class="card rounded-none">
+        <div class="card-body">
+            <div class="quality">
+                <p class="quality-rating">{{ review["rOverall"] }}</p>
+                <p class="quality-label">QUALITY</p>
+                <div class="difficulty">
+                    <p class="difficulty-rating">{{ review["rEasy"] }}</p>
+                    <p class="difficulty-label">DIFFICULTY</p>
+                </div>
+            </div>
+            <p class="course">{{ review["rClass"] }}</p>
+            <div class="alert alert-green w-full rounded-none">😎 AWESOME</div>
+            <p class="date">{{ review["rDate"] }}</p>
+            <p class="info">
+                {% if review["takenForCredit"] != 'N/A' %}
+                For Credit:&nbsp;{{review["takenForCredit"]}}&nbsp;&nbsp;&nbsp;
+                {% endif %}
+                {% if review["attendance"] != 'N/A' %}
+                Attendance:&nbsp;{{review["attendance"]}}&nbsp;&nbsp;&nbsp;
+                {% endif %}
+                {% if review["rWouldTakeAgain"] != 'N/A' %}
+                Would Take Again:&nbsp;{{review["rWouldTakeAgain"]}}&nbsp;&nbsp;&nbsp;
+                {% endif %}
+                {% if review["teacherGrade"] != 'N/A' %}
+                Grade:&nbsp;{{review["teacherGrade"]}}&nbsp;&nbsp;&nbsp;
+                {% endif %}
+                {% if review["rTextBookUse"] != 'N/A' %}
+                Textbook:&nbsp;{{review["rTextBookUse"]}}</p>
+            {% endif %}
+            <p class="review">
+                {{ review["rComments"] }}
+                {% for tag in review["teacherRatingTags"] %}
+            <div class="chip chip-blue mr-2">{{ tag }}</div>
+            {% endfor %}
+            </p>
+
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</body>
+
+</html>
